@@ -470,319 +470,277 @@
     // ------------------------------
 
     // Cartas do Sistema Imune
-    const IMMUNE_CARDS = [
-      {
-        id: "neutrofilo",
-        name: "Neutrófilo",
-        short: "Neutrófilo",
-        role: "neutrofilo",
-        kind: "immune",
-        description: "Neutrófilo é o soldado da linha de frente contra bactérias e alguns fungos."
-      },
-      {
-        id: "macrofago",
-        name: "Macrófago",
-        short: "Macrófago",
-        role: "macrofago",
-        kind: "immune",
-        description: "Macrófago engole invasores e mostra pedaços deles para outras células de defesa."
-      },
-      {
-        id: "th1",
-        name: "Linfócito Th1",
-        short: "Th1",
-        role: "th1",
-        kind: "immune",
-        description: "Th1 organiza respostas contra vírus, bactérias e fungos que se escondem dentro das células."
-      },
-      {
-        id: "th2",
-        name: "Linfócito Th2",
-        short: "Th2",
-        role: "th2",
-        kind: "immune",
-        description: "Th2 organiza a defesa contra vermes e participa de alergias."
-      },
-      {
-        id: "th17",
-        name: "Linfócito Th17",
-        short: "Th17",
-        role: "th17",
-        kind: "immune",
-        description: "Th17 é importante na defesa de mucosas e em inflamações intensas, como psoríase."
-      },
-      {
-        id: "treg",
-        name: "Linfócito Treg",
-        short: "Treg",
-        role: "treg",
-        kind: "immune",
-        description: "Treg é o freio do sistema imune, ajudando a evitar ataques contra o próprio corpo."
-      },
-      {
-        id: "tcito",
-        name: "Linfócito T citotóxico",
-        short: "T CD8+",
-        role: "tcito",
-        kind: "immune",
-        description: "Linfócito T citotóxico destrói células infectadas por vírus."
-      },
-      {
-        id: "b",
-        name: "Linfócito B",
-        short: "Linfócito B",
-        role: "b",
-        kind: "immune",
-        description: "Linfócito B produz anticorpos, que marcam invasores para serem destruídos."
-      },
-      {
-        id: "mastocito",
-        name: "Mastócito",
-        short: "Mastócito",
-        role: "mastocito",
-        kind: "immune",
-        description: "Mastócito é o mago das alergias, liberando histamina e outras substâncias."
-      },
-      {
-        id: "eosinofilo",
-        name: "Eosinófilo",
-        short: "Eosinófilo",
-        role: "eosinofilo",
-        kind: "immune",
-        description: "Eosinófilo ataca vermes e participa de alergias mais prolongadas."
-      }
-    ];
+    // Cartas do Sistema Imune – versão simplificada
+const IMMUNE_CARDS = [
+  {
+    id: "neutrofilo",
+    name: "Neutrófilo",
+    short: "Neutrófilo",
+    role: "neutrofilo",
+    kind: "immune",
+    description:
+      "Soldado rápido da linha de frente. No jogo, ele é bom para defender contra bactérias e alguns fungos."
+  },
+  {
+    id: "macrofago",
+    name: "Macrófago",
+    short: "Macrófago",
+    role: "macrofago",
+    kind: "immune",
+    description:
+      "Lixeiro do corpo: engole invasores e mostra pedaços deles para outras células. No jogo, ajuda contra bactérias, vírus e fungos."
+  },
+  {
+    id: "linfocito_b",
+    name: "Linfócito B",
+    short: "Linfócito B",
+    role: "b",
+    kind: "immune",
+    description:
+      "Fábrica de anticorpos. No jogo, é usado para defender contra vírus, bactérias, vermes e alergias (como se fosse IgE)."
+  },
+  {
+    id: "linfocito_t",
+    name: "Linfócito T",
+    short: "Linfócito T",
+    role: "t",
+    kind: "immune",
+    description:
+      "Comandante e assassino de células infectadas. No jogo, é a defesa principal contra vírus e algumas doenças autoimunes."
+  },
+  {
+    id: "eosinofilo",
+    name: "Eosinófilo",
+    short: "Eosinófilo",
+    role: "eosinofilo",
+    kind: "immune",
+    description:
+      "Guerreiro com “granadas” especiais. No jogo, é muito bom contra vermes (helmintos) e alergias mais fortes."
+  },
+  {
+    id: "mastocito_ige",
+    name: "Mastócito + IgE",
+    short: "Mastócito + IgE",
+    role: "mastocito",
+    kind: "immune",
+    description:
+      "Sentinela das alergias. No jogo, reage rápido em alergias (rinite, picada de inseto, alimentos, poeira, pólen) e ajuda contra vermes."
+  },
+  {
+    id: "treg",
+    name: "Linfócito Treg",
+    short: "Treg",
+    role: "treg",
+    kind: "immune",
+    description:
+      "Juiz da paz do sistema imune. No jogo, é a carta que freia exageros, defende contra doenças autoimunes e melhora alergias."
+  },
+  {
+    id: "tecidos_normais",
+    name: "Tecidos normais",
+    short: "Tecidos",
+    role: "tecido_normal",
+    kind: "immune",
+    description:
+      "Células da pele, fígado, pâncreas, músculo e neurônios. No jogo, lembram que existem “civis inocentes” que precisam ser protegidos nas autoimunidades."
+  }
+];
 
-    // Cartas de Doenças
-    const DISEASE_CARDS = [
-      // Autoimunes (todas só defendem com Treg, ludicamente)
-      {
-        id: "dm1",
-        name: "Diabetes tipo 1",
-        short: "DM1",
-        category: "autoimune",
-        kind: "disease",
-        effectiveRoles: ["treg"],
-        description: "Autoimune: o corpo ataca as células beta do pâncreas. Só Treg acalma essa confusão."
-      },
-      {
-        id: "psoriase",
-        name: "Psoríase",
-        short: "Psoríase",
-        category: "autoimune",
-        kind: "disease",
-        effectiveRoles: ["treg"],
-        description: "Autoimune de pele, ligada a inflamação intensa. Treg ajudaria a frear."
-      },
-      {
-        id: "anemia_autoimune",
-        name: "Anemia hemolítica autoimune",
-        short: "Anemia AI",
-        category: "autoimune",
-        kind: "disease",
-        effectiveRoles: ["treg"],
-        description: "Autoimune: anticorpos atacam as hemácias. Treg tenta acalmar a resposta."
-      },
-      {
-        id: "em",
-        name: "Esclerose múltipla",
-        short: "EM",
-        category: "autoimune",
-        kind: "disease",
-        effectiveRoles: ["treg"],
-        description: "Autoimune contra a mielina dos neurônios. Treg ajudaria a conter o ataque."
-      },
-      {
-        id: "lupus",
-        name: "Lúpus eritematoso sistêmico",
-        short: "Lúpus",
-        category: "autoimune",
-        kind: "disease",
-        effectiveRoles: ["treg"],
-        description: "Autoimune sistêmico com muitos autoanticorpos. Treg é a carta calmante."
-      },
+// Cartas de Doenças – versão nova
+const DISEASE_CARDS = [
+  // 1. Vírus genérico
+  {
+    id: "virus_generico",
+    name: "Vírus (genérico)",
+    short: "Vírus",
+    category: "viral",
+    kind: "disease",
+    effectiveRoles: ["t", "b", "macrofago", "neutrofilo"],
+    description:
+      "Invade por dentro das células. No jogo, pode ser defendido por Linfócito T, Linfócito B (anticorpos), Macrófagos e um pouco por Neutrófilos."
+  },
 
-      // Virais – todos usam T citotóxico, Th1, macrófago, B
-      {
-        id: "gripe",
-        name: "Gripe (Influenza)",
-        short: "Gripe",
-        category: "viral",
-        kind: "disease",
-        effectiveRoles: ["tcito", "th1", "macrofago", "b"],
-        description: "Vírus respiratório. Defesa com T citotóxico, Th1, macrófago e anticorpos."
-      },
-      {
-        id: "covid",
-        name: "COVID-19",
-        short: "COVID",
-        category: "viral",
-        kind: "disease",
-        effectiveRoles: ["tcito", "th1", "macrofago", "b"],
-        description: "Infecção viral respiratória. Defesa com T citotóxico, Th1, macrófago e anticorpos."
-      },
-      {
-        id: "dengue",
-        name: "Dengue",
-        short: "Dengue",
-        category: "viral",
-        kind: "disease",
-        effectiveRoles: ["tcito", "th1", "macrofago", "b"],
-        description: "Vírus transmitido por mosquito. Defesa com T citotóxico, Th1, macrófago e anticorpos."
-      },
-      {
-        id: "herpes",
-        name: "Herpes",
-        short: "Herpes",
-        category: "viral",
-        kind: "disease",
-        effectiveRoles: ["tcito", "th1", "macrofago", "b"],
-        description: "Vírus que pode ficar latente. Defesa com T citotóxico, Th1, macrófagos e anticorpos."
-      },
-      {
-        id: "hepatite_c",
-        name: "Hepatite C",
-        short: "Hepatite C",
-        category: "viral",
-        kind: "disease",
-        effectiveRoles: ["tcito", "th1", "macrofago", "b"],
-        description: "Vírus que ataca o fígado. Defesa com T citotóxico, Th1, macrófagos e anticorpos."
-      },
+  // 2. Bactéria genérica
+  {
+    id: "bacteria_generica",
+    name: "Bactéria (genérica)",
+    short: "Bactéria",
+    category: "bacteriana",
+    kind: "disease",
+    effectiveRoles: ["neutrofilo", "macrofago", "b"],
+    description:
+      "Invade o corpo por fora das células. No jogo, Neutrófilos são a defesa principal, com ajuda de Macrófagos e anticorpos do Linfócito B."
+  },
 
-      // Bactérias
-      {
-        id: "tuberculose",
-        name: "Tuberculose",
-        short: "TB",
-        category: "bacteriana",
-        kind: "disease",
-        effectiveRoles: ["th1", "macrofago"],
-        description: "Bactéria que se esconde dentro de macrófagos. Th1 e macrófago são essenciais."
-      },
-      {
-        id: "tetano",
-        name: "Tétano",
-        short: "Tétano",
-        category: "bacteriana",
-        kind: "disease",
-        effectiveRoles: ["neutrofilo", "macrofago", "b"],
-        description: "Bactéria que libera toxina. Neutrófilos, macrófagos e anticorpos ajudam."
-      },
-      {
-        id: "botulismo",
-        name: "Botulismo",
-        short: "Botulismo",
-        category: "bacteriana",
-        kind: "disease",
-        effectiveRoles: ["neutrofilo", "macrofago", "b"],
-        description: "Bactéria produtora de toxina. Defesa com neutrófilos, macrófagos e anticorpos."
-      },
-      {
-        id: "itu",
-        name: "Infecção urinária",
-        short: "ITU",
-        category: "bacteriana",
-        kind: "disease",
-        effectiveRoles: ["neutrofilo", "macrofago", "b"],
-        description: "Bactéria no trato urinário. Neutrófilos, macrófagos e anticorpos participam."
-      },
-      {
-        id: "sifilis",
-        name: "Sífilis",
-        short: "Sífilis",
-        category: "bacteriana",
-        kind: "disease",
-        effectiveRoles: ["neutrofilo", "macrofago", "b"],
-        description: "Bactéria espiroqueta. Defesa com neutrófilos, macrófagos e anticorpos."
-      },
+  // 3. Helmintos (vermes)
+  {
+    id: "helmintos",
+    name: "Helmintos (vermes)",
+    short: "Helmintos",
+    category: "verme",
+    kind: "disease",
+    effectiveRoles: ["eosinofilo", "mastocito", "b"],
+    description:
+      "Vermes grandões. No jogo, Eosinófilos, Mastócitos + IgE e Linfócitos B (como IgE) são as melhores defesas."
+  },
 
-      // Vermes
-      {
-        id: "ascaridiase",
-        name: "Ascaridíase",
-        short: "Ascaridíase",
-        category: "verme",
-        kind: "disease",
-        effectiveRoles: ["eosinofilo", "mastocito", "th2", "b"],
-        description: "Vermes intestinais. Defesa com eosinófilos, mastócitos, Th2 e IgE (B)."
-      },
-      {
-        id: "teniase",
-        name: "Teníase",
-        short: "Teníase",
-        category: "verme",
-        kind: "disease",
-        effectiveRoles: ["eosinofilo", "mastocito", "th2", "b"],
-        description: "Verme intestinal. Eosinófilos, mastócitos, Th2 e IgE (B) ajudam na expulsão."
-      },
-      {
-        id: "esquistossomose",
-        name: "Esquistossomose",
-        short: "Esquisto",
-        category: "verme",
-        kind: "disease",
-        effectiveRoles: ["eosinofilo", "mastocito", "th2", "b"],
-        description: "Vermes no sistema porta hepático. Defesa com eosinófilos, mastócitos, Th2 e IgE."
-      },
+  // 4. Rinite alérgica
+  {
+    id: "rinite_alergica",
+    name: "Rinite alérgica",
+    short: "Rinite",
+    category: "alergia",
+    kind: "disease",
+    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+    description:
+      "Inflamação do nariz por alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócito B (IgE) participam. Treg ajuda a controlar o exagero."
+  },
 
-      // Fungos
-      {
-        id: "histoplasmose",
-        name: "Histoplasmose",
-        short: "Histoplasmose",
-        category: "fungo",
-        kind: "disease",
-        effectiveRoles: ["th1", "macrofago", "neutrofilo"],
-        description: "Fungo que pode viver dentro de células. Th1, macrófagos e neutrófilos são importantes."
-      },
-      {
-        id: "candidiase",
-        name: "Candidíase",
-        short: "Candidíase",
-        category: "fungo",
-        kind: "disease",
-        effectiveRoles: ["th17", "neutrofilo"],
-        description: "Fungo de mucosa. Th17 e neutrófilos são chave na defesa."
-      },
+  // 5. Alergia a alimentos
+  {
+    id: "alergia_alimentos",
+    name: "Alergia a alimentos",
+    short: "Alergia alim.",
+    category: "alergia",
+    kind: "disease",
+    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+    description:
+      "O corpo reage demais a um alimento comum. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) aparecem. Treg tenta evitar ou diminuir a alergia."
+  },
 
-      // Alergias
-      {
-        id: "rinite",
-        name: "Rinite alérgica",
-        short: "Rinite",
-        category: "alergia",
-        kind: "disease",
-        effectiveRoles: ["mastocito", "eosinofilo", "th2", "b"],
-        description: "Alergia nasal. Mastócitos, eosinófilos, Th2 e IgE participam."
-      },
-      {
-        id: "alergia",
-        name: "Alergia",
-        short: "Alergia",
-        category: "alergia",
-        kind: "disease",
-        effectiveRoles: ["mastocito", "eosinofilo", "th2", "b"],
-        description: "Reação exagerada a algo comum. Mastócitos, eosinófilos, Th2 e IgE atuam."
-      },
-      {
-        id: "anafilaxia",
-        name: "Anafilaxia",
-        short: "Anafilaxia",
-        category: "alergia",
-        kind: "disease",
-        effectiveRoles: ["mastocito", "eosinofilo", "th2", "b"],
-        description: "Alergia grave e rápida. Mastócitos são centrais, com eosinófilos, Th2 e IgE."
-      },
-      {
-        id: "dermatite_atopica",
-        name: "Dermatite atópica",
-        short: "Dermatite",
-        category: "alergia",
-        kind: "disease",
-        effectiveRoles: ["mastocito", "eosinofilo", "th2", "b"],
-        description: "Alergia de pele crônica. Mastócitos, eosinófilos, Th2 e IgE estão envolvidos."
-      }
-    ];
+  // 6. Picada de inseto
+  {
+    id: "picada_inseto",
+    name: "Picada de inseto",
+    short: "Picada",
+    category: "alergia",
+    kind: "disease",
+    effectiveRoles: ["mastocito", "eosinofilo", "b"],
+    description:
+      "Reação local com vermelhidão e coceira. No jogo, Mastócitos + IgE são os primeiros a reagir, com ajuda de Eosinófilos e anticorpos do Linfócito B."
+  },
+
+  // 7. Febre reumática (autoimune pós-infecção)
+  {
+    id: "febre_reumatica",
+    name: "Febre reumática",
+    short: "Febre reum.",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Depois de uma infecção bacteriana, o corpo confunde o coração com o inimigo. No jogo, só Treg é considerado uma defesa eficaz, porque ajuda a frear o ataque errado."
+  },
+
+  // 8. Pólen
+  {
+    id: "polen",
+    name: "Pólen",
+    short: "Pólen",
+    category: "alergia",
+    kind: "disease",
+    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+    description:
+      "Grãozinho de planta que causa alergia em algumas pessoas. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) reagem, e Treg ajuda a acalmar."
+  },
+
+  // 9. Poeira
+  {
+    id: "poeira",
+    name: "Poeira",
+    short: "Poeira",
+    category: "alergia",
+    kind: "disease",
+    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+    description:
+      "Poeira de casa pode ser um gatilho de alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) atuam, com Treg como freio."
+  },
+
+  // 10. Falta de Treg
+  {
+    id: "falta_treg",
+    name: "Falta de Treg",
+    short: "Falta Treg",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Quando quase não há “juiz da paz”. No jogo, isso simboliza perda do freio: autoimunes e alergias ficam piores. Jogar Treg aqui representa recuperar o controle."
+  },
+
+  // 11. Artrite reumatoide
+  {
+    id: "artrite_reumatoide",
+    name: "Artrite reumatoide",
+    short: "AR",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Autoimune nas articulações. No jogo, só Treg é tratado como defesa eficaz, pois representa frear a inflamação exagerada contra as juntas."
+  },
+
+  // 12. Diabetes Mellitus tipo 1 (DM1)
+  {
+    id: "dm1",
+    name: "Diabetes Mellitus tipo 1",
+    short: "DM1",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Autoimune contra as células do pâncreas que produzem insulina. No jogo, Treg é a única carta que “tenta parar” esse ataque."
+  },
+
+  // 13. Autoanticorpos
+  {
+    id: "autoanticorpos",
+    name: "Autoanticorpos",
+    short: "Autoantic.",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Anticorpos que atacam o próprio corpo. No jogo, representam o erro do sistema imune em doenças como lúpus, artrite reumatoide e outras. Treg é a carta que tenta corrigir o exagero."
+  },
+
+  // 14. Lúpus
+  {
+    id: "lupus",
+    name: "Lúpus eritematoso sistêmico",
+    short: "Lúpus",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Doença autoimune que pode pegar vários órgãos ao mesmo tempo. No jogo, Treg é a defesa porque simboliza o freio para tantos ataques errados."
+  },
+
+  // 15. Doença celíaca
+  {
+    id: "doenca_celiaca",
+    name: "Doença celíaca",
+    short: "Celíaca",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Autoimune que aparece quando o corpo reage ao glúten e machuca o intestino. No jogo, Treg é a carta que representa controlar esse ataque às mucosas."
+  },
+
+  // 16. Hashimoto
+  {
+    id: "hashimoto",
+    name: "Tireoidite de Hashimoto",
+    short: "Hashimoto",
+    category: "autoimune",
+    kind: "disease",
+    effectiveRoles: ["treg"],
+    description:
+      "Autoimune da tireoide. No jogo, Treg é a defesa principal, mostrando que o freio evita que o corpo destrua a própria glândula."
+  }
+];
+
 
     // ------------------------------
     // ESTADO DO JOGO
