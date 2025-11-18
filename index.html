@@ -636,7 +636,8 @@
   </style>
 </head>
 <body>
-  <h1>Imuno-UNO – Guerra do Sistema Imune</h1>
+  <h1>ImUNO – Guerra do Sistema Imune</h1>
+
 
   <div id="game">
     <div id="top-bar">
@@ -869,7 +870,7 @@
         kind: "disease",
         effectiveRoles: ["eosinofilo", "mastocito", "b"],
         description:
-          "Vermes grandões. No jogo, Eosinófilos, Mastócitos + IgE e Linfócitos B (como IgE) são as melhores defesas."
+          "Vermes grandões. No jogo, Eosinófilos, Mastócitos e Linfócitos B (como IgE) são as melhores defesas."
       },
 
       // 4. Rinite alérgica
@@ -881,7 +882,7 @@
         kind: "disease",
         effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
         description:
-          "Inflamação do nariz por alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócito B (IgE) participam. Treg ajuda a controlar o exagero."
+          "Inflamação do nariz por alergia. No jogo, Mastócitos, Eosinófilos e Linfócito B (IgE) participam. Treg ajuda a controlar o exagero."
       },
 
       // 5. Alergia a alimentos
@@ -893,7 +894,7 @@
         kind: "disease",
         effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
         description:
-          "O corpo reage demais a um alimento comum. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) aparecem. Treg tenta evitar ou diminuir a alergia."
+          "O corpo reage demais a um alimento comum. No jogo, Mastócitos, Eosinófilos e Linfócitos B (IgE) aparecem. Treg tenta evitar ou diminuir a alergia."
       },
 
       // 6. Picada de inseto
@@ -905,7 +906,7 @@
         kind: "disease",
         effectiveRoles: ["mastocito", "eosinofilo", "b"],
         description:
-          "Reação local com vermelhidão e coceira. No jogo, Mastócitos + IgE são os primeiros a reagir, com ajuda de Eosinófilos e anticorpos do Linfócito B."
+          "Reação local com vermelhidão e coceira. No jogo, Mastócitos são os primeiros a reagir, com ajuda de Eosinófilos e anticorpos do Linfócito B."
       },
 
       // 7. Febre reumática (autoimune pós-infecção)
@@ -929,7 +930,7 @@
         kind: "disease",
         effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
         description:
-          "Grãozinho de planta que causa alergia em algumas pessoas. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) reagem, e Treg ajuda a acalmar."
+          "Grãozinho de planta que causa alergia em algumas pessoas. No jogo, Mastócitos, Eosinófilos e Linfócitos B (IgE) reagem, e Treg ajuda a acalmar."
       },
 
       // 9. Poeira
@@ -941,7 +942,7 @@
         kind: "disease",
         effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
         description:
-          "Poeira de casa pode ser um gatilho de alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) atuam, com Treg como freio."
+          "Poeira de casa pode ser um gatilho de alergia. No jogo, Mastócitos, Eosinófilos e Linfócitos B (IgE) atuam, com Treg como freio."
       },
 
       // 10. Falta de Treg
@@ -1013,7 +1014,7 @@
         kind: "disease",
         effectiveRoles: ["treg"],
         description:
-          "Autoimune que aparece quando o corpo reage ao glúten e machuca o intestino. No jogo, Treg é a carta que representa controlar esse ataque às mucosas."
+          "Doença Autoimune que aparece quando o corpo reage ao glúten e machuca o intestino. No jogo, Treg é a carta que representa controlar esse ataque às mucosas."
       },
 
       // 16. Hashimoto
@@ -1230,7 +1231,6 @@
       }
 
       const name = card.short || card.name;
-      const footer = isImmuneCard(card) ? "Defesa" : "Ataque";
 
       return `
         <div class="card-top">
@@ -1238,7 +1238,6 @@
           <span class="card-type">${typeLabel}${middleLabel ? " · " + middleLabel : ""}</span>
         </div>
         <div class="card-name">${name}</div>
-        <div class="card-footer">${footer}</div>
       `;
     }
 
@@ -1840,18 +1839,19 @@
         baseInfo += `<strong>Tipo:</strong> Célula do sistema imune (🛡)<br/>`;
         baseInfo += `<strong>Função lúdica:</strong> ${card.description}<br/>`;
 
+      
       } else if (isDiseaseCard(card)) {
         baseInfo += `<strong>Tipo:</strong> ${describeCategory(card)} (⚔)<br/>`;
         baseInfo += `<strong>Descrição lúdica:</strong> ${card.description}<br/>`;
-        baseInfo += `<br/><strong>Defesas eficazes:</strong> `;
+        baseInfo += `<br/><strong>Defesas eficazes contra ela:</strong> `;
         const roles = card.effectiveRoles.map(r => {
           const def = IMMUNE_CARDS.find(c => c.role === r);
           return def ? def.name : r;
         });
         baseInfo += roles.join(", ") + `.<br/>`;
+        
       }
 
-  
 
       cardPreviewDescriptionEl.innerHTML = baseInfo;
 
@@ -1936,9 +1936,8 @@
       closeTutorial(true);
     });
 
+    // Abre o tutorial assim que a página carregar
+    openTutorial(true);
   </script>
 </body>
 </html>
-
-
-
