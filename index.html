@@ -74,17 +74,47 @@
       border: 2px solid #111827;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      align-items: stretch;
       font-weight: bold;
       font-size: 14px;
       cursor: pointer;
       box-shadow: 0 4px 0 rgba(0,0,0,0.4);
       transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
       color: #f9fafb;
-      text-align: center;
+      text-align: left;
       padding: 4px;
       box-sizing: border-box;
+    }
+
+    .card-top {
+      font-size: 10px;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-type {
+      font-weight: 600;
+    }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-footer {
+      font-size: 10px;
+      opacity: 0.85;
+      text-align: center;
     }
 
     .card.player-card:hover {
@@ -97,6 +127,15 @@
       background: linear-gradient(135deg, #111827, #1f2937);
       color: transparent;
       border-color: #4b5563;
+      cursor: default;
+    }
+
+    .card.face-down::before {
+      content: "🧬";
+      color: #e5e7eb;
+      font-size: 24px;
+      text-align: center;
+      width: 100%;
     }
 
     /* Cores temáticas (não têm efeito de regra, só visual) */
@@ -192,6 +231,11 @@
       box-shadow: 0 4px 0 #111827;
     }
 
+    button.small {
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
     #status {
       margin-top: 8px;
       min-height: 40px;
@@ -285,6 +329,169 @@
     }
 
     /* ===========================
+       LEGENDA DE CORES
+       =========================== */
+    #legend {
+      max-width: 950px;
+      width: 100%;
+      padding: 0 16px 4px 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #020617;
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid #1f2937;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+    }
+
+    .legend-color.immune {
+      background: #15803d;
+    }
+
+    .legend-color.autoimune {
+      background: #7c2d12;
+    }
+
+    .legend-color.viral {
+      background: #1d4ed8;
+    }
+
+    .legend-color.bacteriana {
+      background: #a16207;
+    }
+
+    .legend-color.verme {
+      background: #4b5563;
+    }
+
+    .legend-color.fungo {
+      background: #4c1d95;
+    }
+
+    .legend-color.alergia {
+      background: #b91c1c;
+    }
+
+    /* ===========================
+       OVERLAY DO TUTORIAL
+       =========================== */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.94);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay-box {
+      background: #020617;
+      border-radius: 16px;
+      padding: 16px 20px;
+      max-width: 500px;
+      width: calc(100% - 32px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+      border: 1px solid #1f2937;
+    }
+
+    .overlay-box h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .overlay-box p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .overlay-box ul {
+      margin: 4px 0 8px 18px;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    .overlay-box li {
+      margin-bottom: 4px;
+    }
+
+    .overlay-step-info {
+      font-size: 12px;
+      opacity: 0.75;
+      margin-bottom: 8px;
+    }
+
+    .overlay-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    /* ===========================
+       NOTIFICAÇÃO CENTRAL VERMELHA
+       =========================== */
+    #notification {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      z-index: 3000;
+      opacity: 0;
+      transition: opacity 0.2s ease-out;
+    }
+
+    #notificationContent {
+      max-width: 480px;
+      width: calc(100% - 40px);
+      background: #b91c1c;
+      color: #fee2e2;
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      border: 2px solid #7f1d1d;
+      transform: translateY(10px);
+      transition: transform 0.2s ease-out;
+    }
+
+    #notification.visible {
+      opacity: 1;
+    }
+
+    #notification.visible #notificationContent {
+      transform: translateY(0);
+    }
+
+    /* ===========================
        RESPONSIVIDADE PARA TABLET
        =========================== */
     @media (max-width: 768px) {
@@ -307,6 +514,10 @@
         font-size: 12px;
       }
 
+      .card-name {
+        font-size: 11px;
+      }
+
       #top-bar span {
         font-size: 13px;
       }
@@ -322,6 +533,10 @@
       button {
         padding: 6px 12px;
         font-size: 12px;
+      }
+
+      #notificationContent {
+        font-size: 15px;
       }
     }
 
@@ -351,6 +566,10 @@
         height: 78px;
         font-size: 11px;
         padding: 2px;
+      }
+
+      .card-name {
+        font-size: 10px;
       }
 
       .hand {
@@ -394,15 +613,63 @@
         transform: none;
         box-shadow: 0 4px 0 rgba(0,0,0,0.4);
       }
+
+      .overlay-box {
+        padding: 14px 14px;
+      }
+
+      .overlay-box h2 {
+        font-size: 16px;
+      }
+
+      .overlay-box p,
+      .overlay-box ul {
+        font-size: 13px;
+      }
+
+      #notificationContent {
+        width: calc(100% - 30px);
+        font-size: 14px;
+        padding: 12px 14px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Imuno-UNO – Guerra do Sistema Imune</h1>
+
+  <!-- LEGENDA DE CORES -->
+  <div id="legend">
+    <span class="legend-item">
+      <span class="legend-color immune"></span> Células do sistema imune (defesa)
+    </span>
+    <span class="legend-item">
+      <span class="legend-color autoimune"></span> Doenças autoimunes
+    </span>
+    <span class="legend-item">
+      <span class="legend-color viral"></span> Doenças virais
+    </span>
+    <span class="legend-item">
+      <span class="legend-color bacteriana"></span> Doenças bacterianas
+    </span>
+    <span class="legend-item">
+      <span class="legend-color verme"></span> Vermes (helmintos)
+    </span>
+    <span class="legend-item">
+      <span class="legend-color fungo"></span> Infecções fúngicas
+    </span>
+    <span class="legend-item">
+      <span class="legend-color alergia"></span> Doenças alérgicas
+    </span>
+  </div>
+
   <div id="game">
     <div id="top-bar">
       <span>Jogador (você) 🧬 vs 🤖 Patógeno Bot</span>
-      <button id="newGameBtn">Novo jogo</button>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button id="helpBtn" class="secondary small">Como jogar (?)</button>
+        <button id="newGameBtn">Novo jogo</button>
+      </div>
     </div>
 
     <div class="board">
@@ -464,283 +731,303 @@
     </div>
   </div>
 
+  <!-- OVERLAY DO TUTORIAL / AJUDA -->
+  <div id="tutorialOverlay" class="overlay hidden">
+    <div class="overlay-box">
+      <h2 id="tutorialTitle">Bem-vindo ao Imuno-UNO</h2>
+      <p id="tutorialBody">
+        Carregando...
+      </p>
+      <div id="tutorialStepInfo" class="overlay-step-info"></div>
+      <div class="overlay-buttons">
+        <button id="tutorialPrevBtn" class="secondary">Anterior</button>
+        <button id="tutorialNextBtn">Próximo</button>
+        <button id="tutorialStartBtn">Começar partida</button>
+        <button id="tutorialSkipBtn" class="secondary">Pular e jogar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICAÇÃO CENTRAL -->
+  <div id="notification">
+    <div id="notificationContent"></div>
+  </div>
+
   <script>
     // ------------------------------
     // DEFINIÇÕES DO BARALHO
     // ------------------------------
 
-    // Cartas do Sistema Imune
     // Cartas do Sistema Imune – versão simplificada
-const IMMUNE_CARDS = [
-  {
-    id: "neutrofilo",
-    name: "Neutrófilo",
-    short: "Neutrófilo",
-    role: "neutrofilo",
-    kind: "immune",
-    description:
-      "Soldado rápido da linha de frente. No jogo, ele é bom para defender contra bactérias e alguns fungos."
-  },
-  {
-    id: "macrofago",
-    name: "Macrófago",
-    short: "Macrófago",
-    role: "macrofago",
-    kind: "immune",
-    description:
-      "Lixeiro do corpo: engole invasores e mostra pedaços deles para outras células. No jogo, ajuda contra bactérias, vírus e fungos."
-  },
-  {
-    id: "linfocito_b",
-    name: "Linfócito B",
-    short: "Linfócito B",
-    role: "b",
-    kind: "immune",
-    description:
-      "Fábrica de anticorpos. No jogo, é usado para defender contra vírus, bactérias, vermes e alergias (como se fosse IgE)."
-  },
-  {
-    id: "linfocito_t",
-    name: "Linfócito T",
-    short: "Linfócito T",
-    role: "t",
-    kind: "immune",
-    description:
-      "Comandante e assassino de células infectadas. No jogo, é a defesa principal contra vírus e algumas doenças autoimunes."
-  },
-  {
-    id: "eosinofilo",
-    name: "Eosinófilo",
-    short: "Eosinófilo",
-    role: "eosinofilo",
-    kind: "immune",
-    description:
-      "Guerreiro com “granadas” especiais. No jogo, é muito bom contra vermes (helmintos) e alergias mais fortes."
-  },
-  {
-    id: "mastocito_ige",
-    name: "Mastócito + IgE",
-    short: "Mastócito + IgE",
-    role: "mastocito",
-    kind: "immune",
-    description:
-      "Sentinela das alergias. No jogo, reage rápido em alergias (rinite, picada de inseto, alimentos, poeira, pólen) e ajuda contra vermes."
-  },
-  {
-    id: "treg",
-    name: "Linfócito Treg",
-    short: "Treg",
-    role: "treg",
-    kind: "immune",
-    description:
-      "Juiz da paz do sistema imune. No jogo, é a carta que freia exageros, defende contra doenças autoimunes e melhora alergias."
-  },
-  {
-    id: "tecidos_normais",
-    name: "Tecidos normais",
-    short: "Tecidos",
-    role: "tecido_normal",
-    kind: "immune",
-    description:
-      "Células da pele, fígado, pâncreas, músculo e neurônios. No jogo, lembram que existem “civis inocentes” que precisam ser protegidos nas autoimunidades."
-  }
-];
+    const IMMUNE_CARDS = [
+      {
+        id: "neutrofilo",
+        name: "Neutrófilo",
+        short: "Neutrófilo",
+        role: "neutrofilo",
+        kind: "immune",
+        description:
+          "Soldado rápido da linha de frente. No jogo, ele é bom para defender contra bactérias e alguns fungos."
+      },
+      {
+        id: "macrofago",
+        name: "Macrófago",
+        short: "Macrófago",
+        role: "macrofago",
+        kind: "immune",
+        description:
+          "Lixeiro do corpo: engole invasores e mostra pedaços deles para outras células. No jogo, ajuda contra bactérias, vírus e fungos."
+      },
+      {
+        id: "linfocito_b",
+        name: "Linfócito B",
+        short: "Linfócito B",
+        role: "b",
+        kind: "immune",
+        description:
+          "Fábrica de anticorpos. No jogo, é usado para defender contra vírus, bactérias, vermes e alergias (como se fosse IgE)."
+      },
+      {
+        id: "linfocito_t",
+        name: "Linfócito T",
+        short: "Linfócito T",
+        role: "t",
+        kind: "immune",
+        description:
+          "Comandante e assassino de células infectadas. No jogo, é a defesa principal contra vírus e algumas doenças autoimunes."
+      },
+      {
+        id: "eosinofilo",
+        name: "Eosinófilo",
+        short: "Eosinófilo",
+        role: "eosinofilo",
+        kind: "immune",
+        description:
+          "Guerreiro com “granadas” especiais. No jogo, é muito bom contra vermes (helmintos) e alergias mais fortes."
+      },
+      {
+        id: "mastocito_ige",
+        name: "Mastócito + IgE",
+        short: "Mastócito + IgE",
+        role: "mastocito",
+        kind: "immune",
+        description:
+          "Sentinela das alergias. No jogo, reage rápido em alergias (rinite, picada de inseto, alimentos, poeira, pólen) e ajuda contra vermes."
+      },
+      {
+        id: "treg",
+        name: "Linfócito Treg",
+        short: "Treg",
+        role: "treg",
+        kind: "immune",
+        description:
+          "Juiz da paz do sistema imune. No jogo, é a carta que freia exageros, defende contra doenças autoimunes e melhora alergias."
+      },
+      {
+        id: "tecidos_normais",
+        name: "Tecidos normais",
+        short: "Tecidos",
+        role: "tecido_normal",
+        kind: "immune",
+        description:
+          "Células da pele, fígado, pâncreas, músculo e neurônios. No jogo, lembram que existem “civis inocentes” que precisam ser protegidos nas autoimunidades."
+      }
+    ];
 
-// Cartas de Doenças – versão nova
-const DISEASE_CARDS = [
-  // 1. Vírus genérico
-  {
-    id: "virus_generico",
-    name: "Vírus (genérico)",
-    short: "Vírus",
-    category: "viral",
-    kind: "disease",
-    effectiveRoles: ["t", "b", "macrofago", "neutrofilo"],
-    description:
-      "Invade por dentro das células. No jogo, pode ser defendido por Linfócito T, Linfócito B (anticorpos), Macrófagos e um pouco por Neutrófilos."
-  },
+    // Cartas de Doenças – versão nova
+    const DISEASE_CARDS = [
+      // 1. Vírus genérico
+      {
+        id: "virus_generico",
+        name: "Vírus (genérico)",
+        short: "Vírus",
+        category: "viral",
+        kind: "disease",
+        effectiveRoles: ["t", "b", "macrofago", "neutrofilo"],
+        description:
+          "Invade por dentro das células. No jogo, pode ser defendido por Linfócito T, Linfócito B (anticorpos), Macrófagos e um pouco por Neutrófilos."
+      },
 
-  // 2. Bactéria genérica
-  {
-    id: "bacteria_generica",
-    name: "Bactéria (genérica)",
-    short: "Bactéria",
-    category: "bacteriana",
-    kind: "disease",
-    effectiveRoles: ["neutrofilo", "macrofago", "b"],
-    description:
-      "Invade o corpo por fora das células. No jogo, Neutrófilos são a defesa principal, com ajuda de Macrófagos e anticorpos do Linfócito B."
-  },
+      // 2. Bactéria genérica
+      {
+        id: "bacteria_generica",
+        name: "Bactéria (genérica)",
+        short: "Bactéria",
+        category: "bacteriana",
+        kind: "disease",
+        effectiveRoles: ["neutrofilo", "macrofago", "b"],
+        description:
+          "Invade o corpo por fora das células. No jogo, Neutrófilos são a defesa principal, com ajuda de Macrófagos e anticorpos do Linfócito B."
+      },
 
-  // 3. Helmintos (vermes)
-  {
-    id: "helmintos",
-    name: "Helmintos (vermes)",
-    short: "Helmintos",
-    category: "verme",
-    kind: "disease",
-    effectiveRoles: ["eosinofilo", "mastocito", "b"],
-    description:
-      "Vermes grandões. No jogo, Eosinófilos, Mastócitos + IgE e Linfócitos B (como IgE) são as melhores defesas."
-  },
+      // 3. Helmintos (vermes)
+      {
+        id: "helmintos",
+        name: "Helmintos (vermes)",
+        short: "Helmintos",
+        category: "verme",
+        kind: "disease",
+        effectiveRoles: ["eosinofilo", "mastocito", "b"],
+        description:
+          "Vermes grandões. No jogo, Eosinófilos, Mastócitos + IgE e Linfócitos B (como IgE) são as melhores defesas."
+      },
 
-  // 4. Rinite alérgica
-  {
-    id: "rinite_alergica",
-    name: "Rinite alérgica",
-    short: "Rinite",
-    category: "alergia",
-    kind: "disease",
-    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
-    description:
-      "Inflamação do nariz por alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócito B (IgE) participam. Treg ajuda a controlar o exagero."
-  },
+      // 4. Rinite alérgica
+      {
+        id: "rinite_alergica",
+        name: "Rinite alérgica",
+        short: "Rinite",
+        category: "alergia",
+        kind: "disease",
+        effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+        description:
+          "Inflamação do nariz por alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócito B (IgE) participam. Treg ajuda a controlar o exagero."
+      },
 
-  // 5. Alergia a alimentos
-  {
-    id: "alergia_alimentos",
-    name: "Alergia a alimentos",
-    short: "Alergia alim.",
-    category: "alergia",
-    kind: "disease",
-    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
-    description:
-      "O corpo reage demais a um alimento comum. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) aparecem. Treg tenta evitar ou diminuir a alergia."
-  },
+      // 5. Alergia a alimentos
+      {
+        id: "alergia_alimentos",
+        name: "Alergia a alimentos",
+        short: "Alergia alim.",
+        category: "alergia",
+        kind: "disease",
+        effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+        description:
+          "O corpo reage demais a um alimento comum. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) aparecem. Treg tenta evitar ou diminuir a alergia."
+      },
 
-  // 6. Picada de inseto
-  {
-    id: "picada_inseto",
-    name: "Picada de inseto",
-    short: "Picada",
-    category: "alergia",
-    kind: "disease",
-    effectiveRoles: ["mastocito", "eosinofilo", "b"],
-    description:
-      "Reação local com vermelhidão e coceira. No jogo, Mastócitos + IgE são os primeiros a reagir, com ajuda de Eosinófilos e anticorpos do Linfócito B."
-  },
+      // 6. Picada de inseto
+      {
+        id: "picada_inseto",
+        name: "Picada de inseto",
+        short: "Picada",
+        category: "alergia",
+        kind: "disease",
+        effectiveRoles: ["mastocito", "eosinofilo", "b"],
+        description:
+          "Reação local com vermelhidão e coceira. No jogo, Mastócitos + IgE são os primeiros a reagir, com ajuda de Eosinófilos e anticorpos do Linfócito B."
+      },
 
-  // 7. Febre reumática (autoimune pós-infecção)
-  {
-    id: "febre_reumatica",
-    name: "Febre reumática",
-    short: "Febre reum.",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Depois de uma infecção bacteriana, o corpo confunde o coração com o inimigo. No jogo, só Treg é considerado uma defesa eficaz, porque ajuda a frear o ataque errado."
-  },
+      // 7. Febre reumática (autoimune pós-infecção)
+      {
+        id: "febre_reumatica",
+        name: "Febre reumática",
+        short: "Febre reum.",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Depois de uma infecção bacteriana, o corpo confunde o coração com o inimigo. No jogo, só Treg é considerado uma defesa eficaz, porque ajuda a frear o ataque errado."
+      },
 
-  // 8. Pólen
-  {
-    id: "polen",
-    name: "Pólen",
-    short: "Pólen",
-    category: "alergia",
-    kind: "disease",
-    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
-    description:
-      "Grãozinho de planta que causa alergia em algumas pessoas. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) reagem, e Treg ajuda a acalmar."
-  },
+      // 8. Pólen
+      {
+        id: "polen",
+        name: "Pólen",
+        short: "Pólen",
+        category: "alergia",
+        kind: "disease",
+        effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+        description:
+          "Grãozinho de planta que causa alergia em algumas pessoas. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) reagem, e Treg ajuda a acalmar."
+      },
 
-  // 9. Poeira
-  {
-    id: "poeira",
-    name: "Poeira",
-    short: "Poeira",
-    category: "alergia",
-    kind: "disease",
-    effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
-    description:
-      "Poeira de casa pode ser um gatilho de alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) atuam, com Treg como freio."
-  },
+      // 9. Poeira
+      {
+        id: "poeira",
+        name: "Poeira",
+        short: "Poeira",
+        category: "alergia",
+        kind: "disease",
+        effectiveRoles: ["mastocito", "eosinofilo", "b", "treg"],
+        description:
+          "Poeira de casa pode ser um gatilho de alergia. No jogo, Mastócitos + IgE, Eosinófilos e Linfócitos B (IgE) atuam, com Treg como freio."
+      },
 
-  // 10. Falta de Treg
-  {
-    id: "falta_treg",
-    name: "Falta de Treg",
-    short: "Falta Treg",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Quando quase não há “juiz da paz”. No jogo, isso simboliza perda do freio: autoimunes e alergias ficam piores. Jogar Treg aqui representa recuperar o controle."
-  },
+      // 10. Falta de Treg
+      {
+        id: "falta_treg",
+        name: "Falta de Treg",
+        short: "Falta Treg",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Quando quase não há “juiz da paz”. No jogo, isso simboliza perda do freio: autoimunes e alergias ficam piores. Jogar Treg aqui representa recuperar o controle."
+      },
 
-  // 11. Artrite reumatoide
-  {
-    id: "artrite_reumatoide",
-    name: "Artrite reumatoide",
-    short: "AR",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Autoimune nas articulações. No jogo, só Treg é tratado como defesa eficaz, pois representa frear a inflamação exagerada contra as juntas."
-  },
+      // 11. Artrite reumatoide
+      {
+        id: "artrite_reumatoide",
+        name: "Artrite reumatoide",
+        short: "AR",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Autoimune nas articulações. No jogo, só Treg é tratado como defesa eficaz, pois representa frear a inflamação exagerada contra as juntas."
+      },
 
-  // 12. Diabetes Mellitus tipo 1 (DM1)
-  {
-    id: "dm1",
-    name: "Diabetes Mellitus tipo 1",
-    short: "DM1",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Autoimune contra as células do pâncreas que produzem insulina. No jogo, Treg é a única carta que “tenta parar” esse ataque."
-  },
+      // 12. Diabetes Mellitus tipo 1 (DM1)
+      {
+        id: "dm1",
+        name: "Diabetes Mellitus tipo 1",
+        short: "DM1",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Autoimune contra as células do pâncreas que produzem insulina. No jogo, Treg é a única carta que “tenta parar” esse ataque."
+      },
 
-  // 13. Autoanticorpos
-  {
-    id: "autoanticorpos",
-    name: "Autoanticorpos",
-    short: "Autoantic.",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Anticorpos que atacam o próprio corpo. No jogo, representam o erro do sistema imune em doenças como lúpus, artrite reumatoide e outras. Treg é a carta que tenta corrigir o exagero."
-  },
+      // 13. Autoanticorpos
+      {
+        id: "autoanticorpos",
+        name: "Autoanticorpos",
+        short: "Autoantic.",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Anticorpos que atacam o próprio corpo. No jogo, representam o erro do sistema imune em doenças como lúpus, artrite reumatoide e outras. Treg é a carta que tenta corrigir o exagero."
+      },
 
-  // 14. Lúpus
-  {
-    id: "lupus",
-    name: "Lúpus eritematoso sistêmico",
-    short: "Lúpus",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Doença autoimune que pode pegar vários órgãos ao mesmo tempo. No jogo, Treg é a defesa porque simboliza o freio para tantos ataques errados."
-  },
+      // 14. Lúpus
+      {
+        id: "lupus",
+        name: "Lúpus eritematoso sistêmico",
+        short: "Lúpus",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Doença autoimune que pode pegar vários órgãos ao mesmo tempo. No jogo, Treg é a defesa porque simboliza o freio para tantos ataques errados."
+      },
 
-  // 15. Doença celíaca
-  {
-    id: "doenca_celiaca",
-    name: "Doença celíaca",
-    short: "Celíaca",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Autoimune que aparece quando o corpo reage ao glúten e machuca o intestino. No jogo, Treg é a carta que representa controlar esse ataque às mucosas."
-  },
+      // 15. Doença celíaca
+      {
+        id: "doenca_celiaca",
+        name: "Doença celíaca",
+        short: "Celíaca",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Autoimune que aparece quando o corpo reage ao glúten e machuca o intestino. No jogo, Treg é a carta que representa controlar esse ataque às mucosas."
+      },
 
-  // 16. Hashimoto
-  {
-    id: "hashimoto",
-    name: "Tireoidite de Hashimoto",
-    short: "Hashimoto",
-    category: "autoimune",
-    kind: "disease",
-    effectiveRoles: ["treg"],
-    description:
-      "Autoimune da tireoide. No jogo, Treg é a defesa principal, mostrando que o freio evita que o corpo destrua a própria glândula."
-  }
-];
-
+      // 16. Hashimoto
+      {
+        id: "hashimoto",
+        name: "Tireoidite de Hashimoto",
+        short: "Hashimoto",
+        category: "autoimune",
+        kind: "disease",
+        effectiveRoles: ["treg"],
+        description:
+          "Autoimune da tireoide. No jogo, Treg é a defesa principal, mostrando que o freio evita que o corpo destrua a própria glândula."
+      }
+    ];
 
     // ------------------------------
     // ESTADO DO JOGO
@@ -751,10 +1038,78 @@ const DISEASE_CARDS = [
     let currentPlayer = 0; // 0 = você, 1 = bot
     let gameOver = false;
     let selectedCardIndex = null;
+    let gameStarted = false;
 
     // Ataque pendente: doença lançada que alguém precisa defender
     // { targetIndex: 0 ou 1, diseaseCard: {...} }
     let pendingAttack = null;
+
+    // ------------------------------
+    // ESTADO DO TUTORIAL
+    // ------------------------------
+    const tutorialSteps = [
+      {
+        title: "Sobre o que é este jogo?",
+        body: `
+          <p>Você está controlando o <strong>sistema imunológico humano</strong> 🧬.</p>
+          <p>O bot é um <strong>patógeno inimigo</strong> 🤖.</p>
+          <ul>
+            <li><strong>Objetivo:</strong> ficar sem cartas na mão antes do bot.</li>
+            <li>Você usa as cartas para <strong>atacar</strong> (doenças) e <strong>defender</strong> (células).</li>
+          </ul>
+        `
+      },
+      {
+        title: "Dois tipos de cartas principais",
+        body: `
+          <p>Existem dois grupos:</p>
+          <ul>
+            <li><strong>🛡 Células do sistema imune (verde):</strong> usadas para se <strong>defender</strong>.</li>
+            <li><strong>⚔ Doenças (várias cores):</strong> usadas para <strong>atacar</strong> o oponente.</li>
+          </ul>
+          <p>A cor da carta de doença indica o tipo (vírus, bactéria, alergia, verme, autoimune, etc.).</p>
+        `
+      },
+      {
+        title: "Como atacar",
+        body: `
+          <p>No seu turno, você pode:</p>
+          <ul>
+            <li><strong>Jogar uma carta de doença (⚔):</strong> o bot fica sob <strong>ataque</strong>.</li>
+            <li>Ele terá que se defender com uma <strong>célula eficaz</strong> 🛡 ou comprar 1 carta.</li>
+          </ul>
+          <p>Se ele não conseguir se defender bem, <strong>compra carta</strong> e você se aproxima da vitória.</p>
+        `
+      },
+      {
+        title: "Como se defender",
+        body: `
+          <p>Quando aparecer em “Situação” algo como:</p>
+          <p><em>Ataque: Vírus em Você</em></p>
+          <ul>
+            <li>Você está sob <strong>ataque</strong>.</li>
+            <li>Para se defender, clique numa carta verde (🛡) e veja se ela é <strong>eficaz</strong>.</li>
+            <li>Se a carta não for boa para aquela doença, você ainda toma o efeito e compra 1 carta.</li>
+          </ul>
+          <p>Se não quiser arriscar, você pode simplesmente <strong>comprar 1 carta</strong> para encerrar o ataque.</p>
+        `
+      },
+      {
+        title: "Como ganhar a partida",
+        body: `
+          <ul>
+            <li>Use doenças (⚔) para colocar o oponente sob pressão.</li>
+            <li>Use células (🛡) para se defender das doenças que caírem sobre você.</li>
+            <li><strong>Quem ficar sem cartas na mão primeiro vence</strong>.</li>
+          </ul>
+          <p>Durante o jogo, você pode clicar em qualquer carta para ler uma explicação lúdica e ver:</p>
+          <p><strong>“Quando usar esta carta?”</strong></p>
+        `
+      }
+    ];
+
+    let tutorialCurrentStep = 0;
+    let tutorialRequiresGameStart = false;
 
     // ------------------------------
     // UTILITÁRIAS
@@ -842,7 +1197,55 @@ const DISEASE_CARDS = [
       }
     }
 
-    // Efeito especial: Th1/Th2/Th17 descartam outras células
+    function getDiseaseCategoryLabel(card) {
+      if (!card || !isDiseaseCard(card)) return "";
+      switch (card.category) {
+        case "autoimune":  return "Autoimune";
+        case "viral":      return "Viral";
+        case "bacteriana": return "Bacteriana";
+        case "verme":      return "Verme";
+        case "fungo":      return "Fúngica";
+        case "alergia":    return "Alérgica";
+        default:           return "";
+      }
+    }
+
+    function getImmuneRoleLabel(card) {
+      if (!card || !isImmuneCard(card)) return "";
+      if (card.role === "treg") return "Reguladora";
+      if (card.role === "tecido_normal") return "Tecidos do corpo";
+      return "Defesa";
+    }
+
+    function getCardLabelHTML(card) {
+      if (!card) return "";
+      let icon = "";
+      let typeLabel = "";
+      let middleLabel = "";
+      if (isImmuneCard(card)) {
+        icon = "🛡";
+        typeLabel = "Célula";
+        middleLabel = getImmuneRoleLabel(card);
+      } else if (isDiseaseCard(card)) {
+        icon = "⚔";
+        typeLabel = "Doença";
+        middleLabel = getDiseaseCategoryLabel(card);
+      }
+
+      const name = card.short || card.name;
+      const footer = isImmuneCard(card) ? "Defesa" : "Ataque";
+
+      return `
+        <div class="card-top">
+          <span>${icon}</span>
+          <span class="card-type">${typeLabel}${middleLabel ? " · " + middleLabel : ""}</span>
+        </div>
+        <div class="card-name">${name}</div>
+        <div class="card-footer">${footer}</div>
+      `;
+    }
+
+    // Efeito especial: Th1/Th2/Th17 descartam outras células (mantido por compatibilidade)
     function applyThMassDiscard(playerIndex, card) {
       if (!card || !isImmuneCard(card)) return;
       const player = players[playerIndex];
@@ -868,6 +1271,30 @@ const DISEASE_CARDS = [
         }
       });
       player.hand = remaining;
+    }
+
+    // ------------------------------
+    // NOTIFICAÇÃO CENTRAL
+    // ------------------------------
+    const notificationEl = document.getElementById("notification");
+    const notificationContentEl = document.getElementById("notificationContent");
+    let notificationTimeoutId = null;
+
+    function showNotification(message, options = {}) {
+      const duration = typeof options.duration === "number" ? options.duration : 2400;
+
+      if (!notificationEl || !notificationContentEl) return;
+
+      notificationContentEl.textContent = message;
+      notificationEl.classList.add("visible");
+
+      if (notificationTimeoutId) {
+        clearTimeout(notificationTimeoutId);
+      }
+
+      notificationTimeoutId = setTimeout(() => {
+        notificationEl.classList.remove("visible");
+      }, duration);
     }
 
     // ------------------------------
@@ -910,10 +1337,13 @@ const DISEASE_CARDS = [
       currentPlayer = 0;
       selectedCardIndex = null;
       pendingAttack = null;
+      gameStarted = true;
       hideCardPreview();
 
       dealInitialHands();
-      updateStatus("O jogo começou. Seu objetivo é ficar sem cartas na mão.");
+      updateStatus("O jogo começou. Seu objetivo é ficar sem cartas na mão. Use ⚔ para atacar e 🛡 para se defender.");
+      showNotification("O jogo começou! Fique sem cartas na mão para vencer.");
+
       render();
 
       if (currentPlayer === 1 && !gameOver) {
@@ -925,9 +1355,11 @@ const DISEASE_CARDS = [
       if (players[playerIndex].hand.length === 0) {
         gameOver = true;
         if (playerIndex === 0) {
-          updateStatus("Você ficou sem cartas na mão. Vitória do sistema imune humano!");
+          updateStatus("Você ficou sem cartas na mão. Vitória do sistema imune humano! 🎉");
+          showNotification("Vitória! Seu sistema imune venceu! 🎉", { duration: 2800 });
         } else {
-          updateStatus("O bot ficou sem cartas. O patógeno venceu desta vez.");
+          updateStatus("O bot ficou sem cartas. O patógeno venceu desta vez. 😈");
+          showNotification("O patógeno venceu desta vez. 😈", { duration: 2800 });
         }
       }
     }
@@ -943,12 +1375,16 @@ const DISEASE_CARDS = [
         setTimeout(botTurn, 700);
       } else if (!gameOver) {
         if (pendingAttack && pendingAttack.targetIndex === 0) {
+          const diseaseName = pendingAttack.diseaseCard.name;
+          const shortName = pendingAttack.diseaseCard.short || diseaseName;
+          const msg = "⚠ Ataque de " + shortName + "! Use uma carta de defesa 🛡 eficaz ou compre 1 carta.";
           updateStatus(
-            "Você está sob ataque de " + pendingAttack.diseaseCard.name +
-            ". Jogue uma carta de defesa útil ou compre 1 carta."
+            "⚠ Você está sob ataque de " + diseaseName +
+            ". Jogue uma carta de defesa 🛡 eficaz ou compre 1 carta."
           );
+          showNotification(msg);
         } else {
-          updateStatus("Seu turno.");
+          updateStatus("Seu turno. Você pode jogar uma carta ou comprar 1 carta.");
         }
       }
     }
@@ -982,10 +1418,16 @@ const DISEASE_CARDS = [
       const player = players[0];
       const card = player.hand[selectedCardIndex];
       if (!canPlayCardForCurrentState(card)) {
-        updateStatus("Esta carta não pode ser jogada neste momento.");
+        if (pendingAttack && pendingAttack.targetIndex === 0) {
+          updateStatus("Você está sob ataque e só pode jogar cartas de defesa 🛡 ou comprar 1 carta.");
+          showNotification("Você está sob ataque: jogue uma carta de defesa 🛡 ou compre 1 carta.");
+        } else {
+          updateStatus("Neste momento, esta carta não pode ser jogada.");
+        }
         return;
       }
-      playCard(0, selectedCardIndex);
+      const cardEl = playerHandEl.children[selectedCardIndex];
+      playCard(0, selectedCardIndex, cardEl);
     }
 
     function playerDrawCard() {
@@ -998,9 +1440,11 @@ const DISEASE_CARDS = [
         if (newCard) {
           player.hand.push(newCard);
           updateStatus(
-            "Você não se defendeu de " + pendingAttack.diseaseCard.name +
-            " e comprou 1 carta."
+            "Você escolheu não se defender de " + pendingAttack.diseaseCard.name +
+            " e comprou 1 carta. O ataque terminou."
           );
+          const shortName = pendingAttack.diseaseCard.short || pendingAttack.diseaseCard.name;
+          showNotification("Você não se defendeu de " + shortName + " e comprou 1 carta.");
         } else {
           updateStatus("Não há mais cartas para comprar.");
         }
@@ -1058,12 +1502,17 @@ const DISEASE_CARDS = [
           diseaseCard: card
         };
         updateStatus(
-          player.name + " lançou a doença " + card.name +
-          " contra " + players[target].name + "."
+          player.name + " jogou a doença " + card.name +
+          " (⚔) e colocou " + players[target].name + " sob ataque."
         );
+
+        if (target === 0) {
+          const shortName = card.short || card.name;
+          showNotification("⚔ " + player.name + " lançou " + shortName + " em você!");
+        }
       } else {
         // Célula jogada fora de contexto de defesa: apenas descarte lúdico
-        updateStatus(player.name + " jogou a célula " + card.name + ".");
+        updateStatus(player.name + " jogou a célula " + card.name + " (🛡).");
       }
 
       checkWin(playerIndex);
@@ -1090,12 +1539,16 @@ const DISEASE_CARDS = [
           defender.name +
           " tentou se defender com uma carta inválida e comprou 1 carta."
         );
+        if (playerIndex === 0) {
+          showNotification("Defesa inválida. Você comprou 1 carta.");
+        }
         render();
         endTurn();
         return;
       }
 
       const effective = isEffectiveDefense(immuneCard, attack.diseaseCard);
+      const shortName = attack.diseaseCard.short || attack.diseaseCard.name;
 
       if (effective) {
         // Primeiro verifica se o defensor já ganhou ao jogar a carta
@@ -1111,9 +1564,12 @@ const DISEASE_CARDS = [
         updateStatus(
           defender.name +
           " se defendeu com " + immuneCard.name +
-          " contra " + attack.diseaseCard.name +
-          ". O atacante (" + opponent.name + ") comprou 1 carta."
+          " (🛡) contra " + attack.diseaseCard.name +
+          " (⚔). O atacante (" + opponent.name + ") comprou 1 carta."
         );
+        if (playerIndex === 0) {
+          showNotification("Defesa bem-sucedida contra " + shortName + "! O bot comprou 1 carta.");
+        }
       } else {
         // Defesa falhou: o defensor compra 1 carta
         const newCard = drawCardFromDeck();
@@ -1121,10 +1577,13 @@ const DISEASE_CARDS = [
         updateStatus(
           defender.name +
           " tentou se defender com " + immuneCard.name +
-          " contra " + attack.diseaseCard.name +
-          ", mas não foi eficaz. " +
+          " (🛡) contra " + attack.diseaseCard.name +
+          " (⚔), mas não foi eficaz. " +
           defender.name + " comprou 1 carta."
         );
+        if (playerIndex === 0) {
+          showNotification("Sua defesa não foi eficaz contra " + shortName + ". Você comprou 1 carta.");
+        }
       }
 
       render();
@@ -1181,7 +1640,7 @@ const DISEASE_CARDS = [
         if (newCard) bot.hand.push(newCard);
         updateStatus(
           "Bot não conseguiu se defender de " + disease.name +
-          " e comprou 1 carta."
+          " (⚔) e comprou 1 carta."
         );
         pendingAttack = null;
         render();
@@ -1256,12 +1715,22 @@ const DISEASE_CARDS = [
     const drawBtnEl = document.getElementById("drawBtn");
     const newGameBtnEl = document.getElementById("newGameBtn");
     const lastCardInfoEl = document.getElementById("lastCardInfo");
+    const helpBtnEl = document.getElementById("helpBtn");
 
     const cardPreviewEl = document.getElementById("cardPreview");
     const cardPreviewDescriptionEl = document.getElementById("cardPreviewDescription");
     const cardPreviewTitleEl = document.getElementById("cardPreviewTitle");
     const playSelectedBtn = document.getElementById("playSelectedBtn");
     const cancelSelectedBtn = document.getElementById("cancelSelectedBtn");
+
+    const tutorialOverlayEl = document.getElementById("tutorialOverlay");
+    const tutorialTitleEl = document.getElementById("tutorialTitle");
+    const tutorialBodyEl = document.getElementById("tutorialBody");
+    const tutorialStepInfoEl = document.getElementById("tutorialStepInfo");
+    const tutorialPrevBtnEl = document.getElementById("tutorialPrevBtn");
+    const tutorialNextBtnEl = document.getElementById("tutorialNextBtn");
+    const tutorialStartBtnEl = document.getElementById("tutorialStartBtn");
+    const tutorialSkipBtnEl = document.getElementById("tutorialSkipBtn");
 
     function updateStatus(text) {
       statusEl.textContent = text;
@@ -1274,11 +1743,11 @@ const DISEASE_CARDS = [
       const top = discardPile[discardPile.length - 1];
       if (top) {
         discardPileCardEl.className = cardCssClass(top);
-        discardPileCardEl.textContent = top.short || top.name;
+        discardPileCardEl.innerHTML = getCardLabelHTML(top);
         if (isDiseaseCard(top)) {
-          lastCardInfoEl.textContent = describeCategory(top);
+          lastCardInfoEl.textContent = describeCategory(top) + ". Esta carta está em jogo como a última ação.";
         } else {
-          lastCardInfoEl.textContent = "Célula imune jogada.";
+          lastCardInfoEl.textContent = "Célula imune jogada. Serve como descarte ou defesa (quando usada em um ataque).";
         }
       } else {
         discardPileCardEl.className = "card";
@@ -1313,7 +1782,7 @@ const DISEASE_CARDS = [
           cls += " selected";
         }
         cardDiv.className = cls;
-        cardDiv.textContent = card.short || card.name;
+        cardDiv.innerHTML = getCardLabelHTML(card);
         cardDiv.title = "Clique para saber mais e decidir jogar";
         cardDiv.addEventListener("click", () => handlePlayerCardClick(index));
         playerHandEl.appendChild(cardDiv);
@@ -1341,7 +1810,7 @@ const DISEASE_CARDS = [
 
       const flying = document.createElement("div");
       flying.className = cardCssClass(card) + " flying-card";
-      flying.textContent = card.short || card.name;
+      flying.innerHTML = getCardLabelHTML(card);
       flying.style.left = fromRect.left + "px";
       flying.style.top = fromRect.top + "px";
 
@@ -1371,26 +1840,25 @@ const DISEASE_CARDS = [
       let baseInfo = "";
 
       if (isImmuneCard(card)) {
-        baseInfo += `<strong>Tipo:</strong> Célula do sistema imune<br/>`;
+        baseInfo += `<strong>Tipo:</strong> Célula do sistema imune (🛡)<br/>`;
         baseInfo += `<strong>Função lúdica:</strong> ${card.description}<br/>`;
 
-        if (card.role === "th1") {
-          baseInfo += `<strong>Efeito especial:</strong> ao jogar Th1 fora de defesa, você descarta todos os seus Macrófagos junto com ele.<br/>`;
-        } else if (card.role === "th2") {
-          baseInfo += `<strong>Efeito especial:</strong> ao jogar Th2 fora de defesa, você descarta todos os seus Eosinófilos junto com ele.<br/>`;
-        } else if (card.role === "th17") {
-          baseInfo += `<strong>Efeito especial:</strong> ao jogar Th17 fora de defesa, você descarta todos os seus Neutrófilos junto com ele.<br/>`;
-        }
+        // Quando usar esta carta?
+        baseInfo += `<hr/><strong>Quando usar esta carta?</strong><br/>`;
+        baseInfo += `Use esta carta para se <strong>defender</strong> quando aparecerem doenças relacionadas na descrição acima. `;
+        baseInfo += `Fora de um ataque, você pode descartá-la apenas para reduzir o número de cartas na mão.<br/>`;
       } else if (isDiseaseCard(card)) {
-        baseInfo += `<strong>Tipo:</strong> ${describeCategory(card)}<br/>`;
+        baseInfo += `<strong>Tipo:</strong> ${describeCategory(card)} (⚔)<br/>`;
         baseInfo += `<strong>Descrição lúdica:</strong> ${card.description}<br/>`;
         baseInfo += `<br/><strong>Defesas eficazes:</strong> `;
         const roles = card.effectiveRoles.map(r => {
           const def = IMMUNE_CARDS.find(c => c.role === r);
           return def ? def.name : r;
         });
-        baseInfo += roles.join(", ") + ".<br/>";
-        baseInfo += `<br/>Se você jogar esta carta em alguém, ele ficará sob ataque e terá que se defender com uma dessas células ou comprar 1 carta.`;
+        baseInfo += roles.join(", ") + `.<br/>`;
+        baseInfo += `<br/><strong>Quando usar esta carta?</strong><br/>`;
+        baseInfo += `Use esta carta no <strong>seu turno</strong> para <strong>atacar</strong> o oponente. `;
+        baseInfo += `Ele ficará sob ataque e terá que se defender com uma dessas células ou comprar 1 carta.<br/>`;
       }
 
       // Se existe ataque ativo e você é o alvo, explicar se esta carta ajuda
@@ -1398,11 +1866,13 @@ const DISEASE_CARDS = [
         const disease = pendingAttack.diseaseCard;
         const effective = isEffectiveDefense(card, disease);
         baseInfo += `<hr/>`;
-        baseInfo += `<strong>Situação atual:</strong> Você está sob ataque de <em>${disease.name}</em>.<br/>`;
+        baseInfo += `<strong>Situação atual:</strong> Você está sob ataque de <em>${disease.name}</em> (⚔).<br/>`;
         if (effective) {
-          baseInfo += `<strong>Resultado se jogar esta carta agora:</strong> defesa BEM-SUCEDIDA. O oponente comprará 1 carta e o ataque acaba.<br/>`;
+          baseInfo += `<strong>Se jogar esta carta agora:</strong> defesa <span style="color:#4ade80;">BEM-SUCEDIDA</span>. `;
+          baseInfo += `O oponente comprará 1 carta e o ataque acaba.<br/>`;
         } else {
-          baseInfo += `<strong>Resultado se jogar esta carta agora:</strong> defesa FALHOU. Você terá que comprar 1 carta mesmo assim e o ataque acaba.<br/>`;
+          baseInfo += `<strong>Se jogar esta carta agora:</strong> defesa <span style="color:#facc15;">não é ideal</span>. `;
+          baseInfo += `Você terá que comprar 1 carta mesmo assim e o ataque acaba.<br/>`;
         }
       }
 
@@ -1419,10 +1889,43 @@ const DISEASE_CARDS = [
     }
 
     // ------------------------------
+    // TUTORIAL / AJUDA
+    // ------------------------------
+    function updateTutorialContent() {
+      const step = tutorialSteps[tutorialCurrentStep];
+      tutorialTitleEl.textContent = step.title;
+      tutorialBodyEl.innerHTML = step.body;
+      tutorialStepInfoEl.textContent = `Passo ${tutorialCurrentStep + 1} de ${tutorialSteps.length}`;
+
+      tutorialPrevBtnEl.disabled = tutorialCurrentStep === 0;
+      tutorialNextBtnEl.style.display = tutorialCurrentStep < tutorialSteps.length - 1 ? "inline-block" : "none";
+      tutorialStartBtnEl.style.display = tutorialCurrentStep === tutorialSteps.length - 1 ? "inline-block" : "none";
+
+      tutorialSkipBtnEl.textContent = gameStarted ? "Pular / Fechar" : "Pular e jogar";
+      tutorialStartBtnEl.textContent = gameStarted ? "Entendi, continuar" : "Começar partida";
+    }
+
+    function openTutorial(requireGameStart) {
+      tutorialRequiresGameStart = !!requireGameStart;
+      tutorialCurrentStep = 0;
+      updateTutorialContent();
+      tutorialOverlayEl.classList.remove("hidden");
+    }
+
+    function closeTutorial(startGameIfNeeded) {
+      tutorialOverlayEl.classList.add("hidden");
+      if (startGameIfNeeded && !gameStarted) {
+        startGame();
+      }
+    }
+
+    // ------------------------------
     // EVENTOS
     // ------------------------------
     drawBtnEl.addEventListener("click", playerDrawCard);
-    newGameBtnEl.addEventListener("click", startGame);
+    newGameBtnEl.addEventListener("click", () => {
+      startGame();
+    });
     playSelectedBtn.addEventListener("click", playerPlaySelectedCard);
     cancelSelectedBtn.addEventListener("click", () => {
       selectedCardIndex = null;
@@ -1430,8 +1933,34 @@ const DISEASE_CARDS = [
       renderPlayerHand();
     });
 
-    // Inicia o jogo ao carregar
-    startGame();
+    helpBtnEl.addEventListener("click", () => {
+      openTutorial(false);
+    });
+
+    tutorialPrevBtnEl.addEventListener("click", () => {
+      if (tutorialCurrentStep > 0) {
+        tutorialCurrentStep--;
+        updateTutorialContent();
+      }
+    });
+
+    tutorialNextBtnEl.addEventListener("click", () => {
+      if (tutorialCurrentStep < tutorialSteps.length - 1) {
+        tutorialCurrentStep++;
+        updateTutorialContent();
+      }
+    });
+
+    tutorialStartBtnEl.addEventListener("click", () => {
+      closeTutorial(true);
+    });
+
+    tutorialSkipBtnEl.addEventListener("click", () => {
+      closeTutorial(true);
+    });
+
+    // Abre o tutorial assim que a página carregar
+    openTutorial(true);
   </script>
 </body>
 </html>
