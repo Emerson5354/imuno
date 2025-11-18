@@ -131,7 +131,7 @@
     }
 
     .card.face-down::before {
-      content: "🧬";
+      content: "🤖";
       color: #e5e7eb;
       font-size: 24px;
       text-align: center;
@@ -638,38 +638,9 @@
 <body>
   <h1>Imuno-UNO – Guerra do Sistema Imune</h1>
 
-  <!-- LEGENDA DE CORES -->
-  <div id="legend">
-    <span class="legend-item">
-      <span class="legend-color immune"></span> Células do sistema imune (defesa)
-    </span>
-    <span class="legend-item">
-      <span class="legend-color autoimune"></span> Doenças autoimunes
-    </span>
-    <span class="legend-item">
-      <span class="legend-color viral"></span> Doenças virais
-    </span>
-    <span class="legend-item">
-      <span class="legend-color bacteriana"></span> Doenças bacterianas
-    </span>
-    <span class="legend-item">
-      <span class="legend-color verme"></span> Vermes (helmintos)
-    </span>
-    <span class="legend-item">
-      <span class="legend-color fungo"></span> Infecções fúngicas
-    </span>
-    <span class="legend-item">
-      <span class="legend-color alergia"></span> Doenças alérgicas
-    </span>
-  </div>
-
   <div id="game">
     <div id="top-bar">
       <span>Jogador (você) 🧬 vs 🤖 Patógeno Bot</span>
-      <div style="display:flex; gap:6px; flex-wrap:wrap;">
-        <button id="helpBtn" class="secondary small">Como jogar (?)</button>
-        <button id="newGameBtn">Novo jogo</button>
-      </div>
     </div>
 
     <div class="board">
@@ -717,8 +688,37 @@
           Turno atual: <span id="turnInfo"></span>
           • Situação: <span id="phaseInfo"></span>
         </span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button id="helpBtn" class="secondary small">Como jogar (?)</button>
+        <button id="newGameBtn">Novo jogo</button>
+      </div>
       </div>
     </div>
+  </div>
+
+  <!-- LEGENDA DE CORES -->
+  <div id="legend">
+    <span class="legend-item">
+      <span class="legend-color immune"></span> Células do sistema imune (defesa)
+    </span>
+    <span class="legend-item">
+      <span class="legend-color autoimune"></span> Doenças autoimunes
+    </span>
+    <span class="legend-item">
+      <span class="legend-color viral"></span> Doenças virais
+    </span>
+    <span class="legend-item">
+      <span class="legend-color bacteriana"></span> Doenças bacterianas
+    </span>
+    <span class="legend-item">
+      <span class="legend-color verme"></span> Vermes (helmintos)
+    </span>
+    <span class="legend-item">
+      <span class="legend-color fungo"></span> Infecções fúngicas
+    </span>
+    <span class="legend-item">
+      <span class="legend-color alergia"></span> Doenças alérgicas
+    </span>
   </div>
 
   <!-- Painel de pré-visualização da carta escolhida -->
@@ -1961,4 +1961,5 @@
   </script>
 </body>
 </html>
+
 
