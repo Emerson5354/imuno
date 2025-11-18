@@ -1840,10 +1840,6 @@
         baseInfo += `<strong>Tipo:</strong> Célula do sistema imune (🛡)<br/>`;
         baseInfo += `<strong>Função lúdica:</strong> ${card.description}<br/>`;
 
-        // Quando usar esta carta?
-        baseInfo += `<hr/><strong>Quando usar esta carta?</strong><br/>`;
-        baseInfo += `Use esta carta para se <strong>defender</strong> quando aparecerem doenças relacionadas na descrição acima. `;
-        baseInfo += `Fora de um ataque, você pode descartá-la apenas para reduzir o número de cartas na mão.<br/>`;
       } else if (isDiseaseCard(card)) {
         baseInfo += `<strong>Tipo:</strong> ${describeCategory(card)} (⚔)<br/>`;
         baseInfo += `<strong>Descrição lúdica:</strong> ${card.description}<br/>`;
@@ -1853,25 +1849,9 @@
           return def ? def.name : r;
         });
         baseInfo += roles.join(", ") + `.<br/>`;
-        baseInfo += `<br/><strong>Quando usar esta carta?</strong><br/>`;
-        baseInfo += `Use esta carta no <strong>seu turno</strong> para <strong>atacar</strong> o oponente. `;
-        baseInfo += `Ele ficará sob ataque e terá que se defender com uma dessas células ou comprar 1 carta.<br/>`;
       }
 
-      // Se existe ataque ativo e você é o alvo, explicar se esta carta ajuda
-      if (pendingAttack && pendingAttack.targetIndex === 0 && isImmuneCard(card)) {
-        const disease = pendingAttack.diseaseCard;
-        const effective = isEffectiveDefense(card, disease);
-        baseInfo += `<hr/>`;
-        baseInfo += `<strong>Situação atual:</strong> Você está sob ataque de <em>${disease.name}</em> (⚔).<br/>`;
-        if (effective) {
-          baseInfo += `<strong>Se jogar esta carta agora:</strong> defesa <span style="color:#4ade80;">BEM-SUCEDIDA</span>. `;
-          baseInfo += `O oponente comprará 1 carta e o ataque acaba.<br/>`;
-        } else {
-          baseInfo += `<strong>Se jogar esta carta agora:</strong> defesa <span style="color:#facc15;">não é ideal</span>. `;
-          baseInfo += `Você terá que comprar 1 carta mesmo assim e o ataque acaba.<br/>`;
-        }
-      }
+  
 
       cardPreviewDescriptionEl.innerHTML = baseInfo;
 
@@ -1956,10 +1936,9 @@
       closeTutorial(true);
     });
 
-    // Abre o tutorial assim que a página carregar
-    openTutorial(true);
   </script>
 </body>
 </html>
+
 
 
