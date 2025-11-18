@@ -7,632 +7,656 @@
   <title>Imuno-UNO – Guerra do Sistema Imune</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #0b1120;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    h1 {
-      margin-top: 16px;
-      margin-bottom: 8px;
-      text-align: center;
-      font-size: 22px;
-      line-height: 1.2;
-      padding: 0 8px;
-    }
-
-    #game {
-      max-width: 950px;
-      width: 100%;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-
-    .board {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      border-radius: 12px;
-      padding: 16px;
-      background: #020617;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: visible;
-    }
-
-    .row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .section-title {
-      font-size: 14px;
-      opacity: 0.8;
-      margin-bottom: 4px;
-    }
-
-    .hand {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .card {
-      width: 70px;
-      height: 100px;
-      border-radius: 8px;
-      border: 2px solid #111827;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: stretch;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.4);
-      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
-      color: #f9fafb;
-      text-align: left;
-      padding: 4px;
-      box-sizing: border-box;
-    }
-
-    .card-top {
-      font-size: 10px;
-      opacity: 0.9;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .card-type {
-      font-weight: 600;
-    }
-
-    .card-name {
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card-footer {
-      font-size: 10px;
-      opacity: 0.85;
-      text-align: center;
-    }
-
-    .card.player-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 0 rgba(0,0,0,0.5);
-      filter: brightness(1.1);
-    }
-
-    .card.face-down {
-      background: linear-gradient(135deg, #111827, #1f2937);
-      color: transparent;
-      border-color: #4b5563;
-      cursor: default;
-    }
-
-    .card.face-down::before {
-      content: "🤖";
-      color: #e5e7eb;
-      font-size: 24px;
-      text-align: center;
-      width: 100%;
-    }
-
-    /* Cores temáticas (não têm efeito de regra, só visual) */
-    .card.immune {
-      background: #15803d;
-    }
-
-    .card.disease-autoimune {
-      background: #7c2d12;
-    }
-
-    .card.disease-viral {
-      background: #1d4ed8;
-    }
-
-    .card.disease-bacteriana {
-      background: #a16207;
-    }
-
-    .card.disease-verme {
-      background: #4b5563;
-    }
-
-    .card.disease-fungo {
-      background: #4c1d95;
-    }
-
-    .card.disease-alergia {
-      background: #b91c1c;
-    }
-
-    .card.selected {
-      outline: 3px solid #e5e7eb;
-      transform: translateY(-6px);
-      box-shadow: 0 8px 0 rgba(0,0,0,0.6);
-    }
-
-    .center-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .pile-label {
-      font-size: 12px;
-      opacity: 0.8;
-      text-align: center;
-      margin-bottom: 4px;
-    }
-
-    .small-text {
-      font-size: 12px;
-      opacity: 0.75;
-    }
-
-    button {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      background: #22c55e;
-      color: #022c22;
-      box-shadow: 0 4px 0 #15803d;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
-      font-size: 13px;
-    }
-
-    button:hover {
-      filter: brightness(1.05);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 0 #15803d;
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 0 #15803d;
-    }
-
-    button:disabled {
-      background: #4b5563;
-      color: #9ca3af;
-      box-shadow: 0 0 0 transparent;
-      cursor: default;
-      transform: none;
-    }
-
-    button.secondary {
-      background: #1f2937;
-      color: #e5e7eb;
-      box-shadow: 0 4px 0 #111827;
-    }
-
-    button.small {
-      padding: 4px 10px;
-      font-size: 12px;
-    }
-
-    #status {
-      margin-top: 8px;
-      min-height: 40px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    #top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    #top-bar span {
-      font-size: 14px;
-      opacity: 0.9;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #1f2937;
-      margin: 8px 0;
-    }
-
-    /* Painel de pré-visualização da carta */
-    #cardPreview {
-      position: fixed;
-      left: 50%;
-      bottom: 12px;
-      transform: translateX(-50%);
-      background: rgba(15,23,42,0.96);
-      border-radius: 12px;
-      padding: 12px 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      max-width: 460px;
-      width: calc(100% - 16px);
-      box-sizing: border-box;
-      backdrop-filter: blur(8px);
-      border: 1px solid #1f2937;
-      display: none;
-      z-index: 999;
-    }
-
-    #cardPreview.visible {
-      display: block;
-      animation: slide-up 0.2s ease-out;
-    }
-
-    #cardPreviewTitle {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    #cardPreviewDescription {
-      font-size: 13px;
-      opacity: 0.9;
-      margin-bottom: 8px;
-      line-height: 1.4;
-      max-height: 40vh;
-      overflow-y: auto;
-    }
-
-    .card-preview-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* Carta voando para a pilha de descarte */
-    .flying-card {
-      position: fixed;
-      pointer-events: none;
-      z-index: 1000;
-      transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-    }
-
-    @keyframes slide-up {
-      from {
-        opacity: 0;
-        transform: translate(-50%, 10px);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-      }
-    }
-
-    /* ===========================
-       LEGENDA DE CORES
-       =========================== */
-    #legend {
-      max-width: 950px;
-      width: 100%;
-      padding: 0 16px 4px 16px;
-      box-sizing: border-box;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      font-size: 11px;
-      opacity: 0.85;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: #020617;
-      border-radius: 999px;
-      padding: 4px 8px;
-      border: 1px solid #1f2937;
-    }
-
-    .legend-color {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-    }
-
-    .legend-color.immune {
-      background: #15803d;
-    }
-
-    .legend-color.autoimune {
-      background: #7c2d12;
-    }
-
-    .legend-color.viral {
-      background: #1d4ed8;
-    }
-
-    .legend-color.bacteriana {
-      background: #a16207;
-    }
-
-    .legend-color.verme {
-      background: #4b5563;
-    }
-
-    .legend-color.fungo {
-      background: #4c1d95;
-    }
-
-    .legend-color.alergia {
-      background: #b91c1c;
-    }
-
-    /* ===========================
-       OVERLAY DO TUTORIAL
-       =========================== */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,0.94);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-
-    .overlay.hidden {
-      display: none;
-    }
-
-    .overlay-box {
-      background: #020617;
-      border-radius: 16px;
-      padding: 16px 20px;
-      max-width: 500px;
-      width: calc(100% - 32px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-      border: 1px solid #1f2937;
-    }
-
-    .overlay-box h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 18px;
-    }
-
-    .overlay-box p {
-      font-size: 14px;
-      line-height: 1.5;
-      margin-top: 0;
-      margin-bottom: 8px;
-    }
-
-    .overlay-box ul {
-      margin: 4px 0 8px 18px;
-      padding: 0;
-      font-size: 14px;
-    }
-
-    .overlay-box li {
-      margin-bottom: 4px;
-    }
-
-    .overlay-step-info {
-      font-size: 12px;
-      opacity: 0.75;
-      margin-bottom: 8px;
-    }
-
-    .overlay-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    /* ===========================
-       NOTIFICAÇÃO CENTRAL VERMELHA
-       =========================== */
-    #notification {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none;
-      z-index: 3000;
-      opacity: 0;
-      transition: opacity 0.2s ease-out;
-    }
-
-    #notificationContent {
-      max-width: 480px;
-      width: calc(100% - 40px);
-      background: #b91c1c;
-      color: #fee2e2;
-      padding: 14px 18px;
-      border-radius: 14px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.7);
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      border: 2px solid #7f1d1d;
-      transform: translateY(10px);
-      transition: transform 0.2s ease-out;
-    }
-
-    #notification.visible {
-      opacity: 1;
-    }
-
-    #notification.visible #notificationContent {
-      transform: translateY(0);
-    }
-
-    /* ===========================
-       RESPONSIVIDADE PARA TABLET
-       =========================== */
-    @media (max-width: 768px) {
-      #game {
-        padding: 8px;
-      }
-
-      .board {
-        padding: 12px;
-        gap: 12px;
-      }
-
-      h1 {
-        font-size: 20px;
-      }
-
-      .card {
-        width: 60px;
-        height: 90px;
-        font-size: 12px;
-      }
-
-      .card-name {
-        font-size: 11px;
-      }
-
-      #top-bar span {
-        font-size: 13px;
-      }
-
-      .section-title {
-        font-size: 13px;
-      }
-
-      .small-text {
-        font-size: 11px;
-      }
-
-      button {
-        padding: 6px 12px;
-        font-size: 12px;
-      }
-
-      #notificationContent {
-        font-size: 15px;
-      }
-    }
-
-    /* ===========================
-       RESPONSIVIDADE PARA CELULAR
-       =========================== */
-    @media (max-width: 480px) {
-      body {
-        align-items: stretch;
-      }
-
-      #game {
-        padding: 8px 6px 80px 6px; /* espaço extra para o preview fixo */
-      }
-
-      .board {
-        padding: 10px;
-        border-radius: 10px;
-      }
-
-      h1 {
-        font-size: 18px;
-      }
-
-      .card {
-        width: 52px;
-        height: 78px;
-        font-size: 11px;
-        padding: 2px;
-      }
-
-      .card-name {
-        font-size: 10px;
-      }
-
-      .hand {
-        gap: 6px;
-      }
-
-      .center-area {
-        gap: 12px;
-      }
-
-      #status {
-        font-size: 13px;
-        min-height: 32px;
-      }
-
-      #top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      #top-bar span {
-        font-size: 12px;
-      }
-
-      .row {
-        justify-content: space-between;
-      }
-
-      #cardPreview {
-        bottom: 6px;
-        padding: 10px 12px;
-        max-width: 100%;
-        width: calc(100% - 12px);
-      }
-
-      #cardPreviewDescription {
-        font-size: 12px;
-      }
-
-      .card.player-card:hover {
-        transform: none;
-        box-shadow: 0 4px 0 rgba(0,0,0,0.4);
-      }
-
-      .overlay-box {
-        padding: 14px 14px;
-      }
-
-      .overlay-box h2 {
-        font-size: 16px;
-      }
-
-      .overlay-box p,
-      .overlay-box ul {
-        font-size: 13px;
-      }
-
-      #notificationContent {
-        width: calc(100% - 30px);
-        font-size: 14px;
-        padding: 12px 14px;
-      }
-    }
+  font-family: Arial, sans-serif;
+  background: #0b1120;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.2;
+  padding: 0 8px;
+}
+
+#game {
+  max-width: 950px;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 12px;
+  padding: 16px;
+  background: #020617;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: visible;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.hand {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 70px;
+  height: 100px;
+  border-radius: 8px;
+  border: 2px solid #111827;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+  color: #f9fafb;
+  text-align: left;
+  padding: 4px;
+  box-sizing: border-box;
+
+  /* Forçar quebra de texto dentro das cartas */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.card-top {
+  font-size: 10px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-type {
+  font-weight: 600;
+}
+
+.card-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-footer {
+  font-size: 10px;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.card.player-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.5);
+  filter: brightness(1.1);
+}
+
+.card.face-down {
+  background: linear-gradient(135deg, #111827, #1f2937);
+  color: transparent;
+  border-color: #4b5563;
+  cursor: default;
+}
+
+.card.face-down::before {
+  content: "🤖";
+  color: #e5e7eb;
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Cores temáticas (não têm efeito de regra, só visual) */
+.card.immune {
+  background: #15803d;
+}
+
+.card.disease-autoimune {
+  background: #7c2d12;
+}
+
+.card.disease-viral {
+  background: #1d4ed8;
+}
+
+.card.disease-bacteriana {
+  background: #a16207;
+}
+
+.card.disease-verme {
+  background: #4b5563;
+}
+
+.card.disease-fungo {
+  background: #4c1d95;
+}
+
+.card.disease-alergia {
+  background: #b91c1c;
+}
+
+.card.selected {
+  outline: 3px solid #e5e7eb;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 0 rgba(0,0,0,0.6);
+}
+
+.center-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.pile-label {
+  font-size: 12px;
+  opacity: 0.8;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.small-text {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: #22c55e;
+  color: #022c22;
+  box-shadow: 0 4px 0 #15803d;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+  font-size: 13px;
+}
+
+button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 #15803d;
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 #15803d;
+}
+
+button:disabled {
+  background: #4b5563;
+  color: #9ca3af;
+  box-shadow: 0 0 0 transparent;
+  cursor: default;
+  transform: none;
+}
+
+button.secondary {
+  background: #1f2937;
+  color: #e5e7eb;
+  box-shadow: 0 4px 0 #111827;
+}
+
+button.small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+#status {
+  margin-top: 8px;
+  min-height: 40px;
+  text-align: center;
+  font-size: 14px;
+}
+
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#top-bar span {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #1f2937;
+  margin: 8px 0;
+}
+
+/* Painel de pré-visualização da carta */
+#cardPreview {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  background: rgba(15,23,42,0.96);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  max-width: 460px;
+  width: calc(100% - 16px);
+  box-sizing: border-box;
+  backdrop-filter: blur(8px);
+  border: 1px solid #1f2937;
+  display: none;
+  z-index: 999;
+}
+
+#cardPreview.visible {
+  display: block;
+  animation: slide-up 0.2s ease-out;
+}
+
+#cardPreviewTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+#cardPreviewDescription {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.card-preview-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Carta voando para a pilha de descarte */
+.flying-card {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ===========================
+   LEGENDA DE CORES
+   =========================== */
+#legend {
+  max-width: 950px;
+  width: 100%;
+  padding: 0 16px 4px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #020617;
+  border-radius: 999px;
+  padding: 4px 8px;
+  border: 1px solid #1f2937;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.legend-color.immune {
+  background: #15803d;
+}
+
+.legend-color.autoimune {
+  background: #7c2d12;
+}
+
+.legend-color.viral {
+  background: #1d4ed8;
+}
+
+.legend-color.bacteriana {
+  background: #a16207;
+}
+
+.legend-color.verme {
+  background: #4b5563;
+}
+
+.legend-color.fungo {
+  background: #4c1d95;
+}
+
+.legend-color.alergia {
+  background: #b91c1c;
+}
+
+/* ===========================
+   OVERLAY DO TUTORIAL
+   =========================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-box {
+  background: #020617;
+  border-radius: 16px;
+  padding: 16px 20px;
+  max-width: 500px;
+  width: calc(100% - 32px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  border: 1px solid #1f2937;
+}
+
+.overlay-box h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.overlay-box p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.overlay-box ul {
+  margin: 4px 0 8px 18px;
+  padding: 0;
+  font-size: 14px;
+}
+
+.overlay-box li {
+  margin-bottom: 4px;
+}
+
+.overlay-step-info {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-bottom: 8px;
+}
+
+.overlay-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ===========================
+   NOTIFICAÇÃO CENTRAL VERMELHA
+   =========================== */
+#notification {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 3000;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+#notificationContent {
+  max-width: 480px;
+  width: calc(100% - 40px);
+  background: #b91c1c;
+  color: #fee2e2;
+  padding: 14px 18px;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid #7f1d1d;
+  transform: translateY(10px);
+  transition: transform 0.2s ease-out;
+}
+
+#notification.visible {
+  opacity: 1;
+}
+
+#notification.visible #notificationContent {
+  transform: translateY(0);
+}
+
+/* ===========================
+   RESPONSIVIDADE PARA TABLET
+   =========================== */
+@media (max-width: 768px) {
+  #game {
+    padding: 8px;
+  }
+
+  .board {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .card {
+    width: 60px;
+    height: 90px;
+    font-size: 12px;
+  }
+
+  .card-name {
+    font-size: 11px;
+  }
+
+  #top-bar span {
+    font-size: 13px;
+  }
+
+  .section-title {
+    font-size: 13px;
+  }
+
+  .small-text {
+    font-size: 11px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  #notificationContent {
+    font-size: 15px;
+  }
+}
+
+/* ===========================
+   RESPONSIVIDADE PARA CELULAR
+   =========================== */
+@media (max-width: 480px) {
+  body {
+    align-items: stretch;
+  }
+
+  #game {
+    padding: 8px 6px 80px 6px; /* espaço extra para o preview fixo */
+  }
+
+  .board {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .card {
+    width: 52px;
+    height: 78px;
+    font-size: 11px;
+    padding: 2px;
+  }
+
+  /* Texto menor e mais controlado nas cartas no celular */
+  .card-name {
+    font-size: 9px;
+  }
+
+  .card-top {
+    font-size: 9px;
+  }
+
+  .hand {
+    gap: 6px;
+  }
+
+  .center-area {
+    gap: 12px;
+    /* alinhar os blocos pelo topo para evitar sensação de “cartas descendo” */
+    align-items: flex-start;
+  }
+
+  /* garantir que as cartas da compra e descarte fiquem alinhadas */
+  #discardPileCard,
+  #drawPileCard {
+    margin: 0 !important;
+  }
+
+  /* altura mínima igual para os dois blocos da área central */
+  .center-area > div {
+    min-height: 110px;
+  }
+
+  #status {
+    font-size: 13px;
+    min-height: 32px;
+  }
+
+  #top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #top-bar span {
+    font-size: 12px;
+  }
+
+  .row {
+    justify-content: space-between;
+  }
+
+  #cardPreview {
+    bottom: 6px;
+    padding: 10px 12px;
+    max-width: 100%;
+    width: calc(100% - 12px);
+  }
+
+  #cardPreviewDescription {
+    font-size: 12px;
+  }
+
+  .card.player-card:hover {
+    transform: none;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+  }
+
+  .overlay-box {
+    padding: 14px 14px;
+  }
+
+  .overlay-box h2 {
+    font-size: 16px;
+  }
+
+  .overlay-box p,
+  .overlay-box ul {
+    font-size: 13px;
+  }
+
+  #notificationContent {
+    width: calc(100% - 30px);
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -1941,3 +1965,4 @@
   </script>
 </body>
 </html>
+
